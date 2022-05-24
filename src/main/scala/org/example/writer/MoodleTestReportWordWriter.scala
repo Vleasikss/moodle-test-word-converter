@@ -10,6 +10,7 @@ import org.example.collector.RawHtmlCollector
 
 import java.awt.Color
 import java.nio.file.Path
+import java.nio.file.Paths
 
 
 class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestReport]) extends RawHtmlFileWriter {
@@ -53,7 +54,7 @@ class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestRepor
       }
 
       val filename = generateFilename(report.id, report.username, report.title)
-      val absolutePath = Path.of(path.toAbsolutePath.toString, filename).toAbsolutePath
+      val absolutePath = Paths.get(path.toAbsolutePath.toString, filename).toAbsolutePath
 
       document.saveToFile(absolutePath.toString, FileFormat.Docx)
       Option(absolutePath)

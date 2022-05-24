@@ -9,6 +9,7 @@ import scala.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class MoodleTestReportWordFileWriterTest {
@@ -19,7 +20,7 @@ public class MoodleTestReportWordFileWriterTest {
         MoodleTestReportWordWriter writer = new MoodleTestReportWordWriter(new RawMoodleTestHtmlReportCollector());
         RawHtmlCollector<MoodleTestReport> toStringConverter = new RawMoodleTestHtmlReportCollector();
         String rawHtml = readFile(loadResource("/test-moodle-page/moodle-test-assignment-result-full-q272284.html"));
-        writer.write(rawHtml, Path.of(""));
+        writer.write(rawHtml, Paths.get(""));
     }
 
     @Test
@@ -27,7 +28,7 @@ public class MoodleTestReportWordFileWriterTest {
         MoodleTestReportWordWriter writer = new MoodleTestReportWordWriter(new RawMoodleTestHtmlReportCollector());
         RawHtmlCollector<MoodleTestReport> toStringConverter = new RawMoodleTestHtmlReportCollector();
         String rawHtml = readFile(loadResource("/test-moodle-page/moodle-test-assignment-result-full-q251633.html"));
-        Option<Path> write = writer.write(rawHtml, Path.of(""));
+        Option<Path> write = writer.write(rawHtml, Paths.get(""));
 
     }
 
@@ -36,12 +37,12 @@ public class MoodleTestReportWordFileWriterTest {
         MoodleTestReportWordWriter writer = new MoodleTestReportWordWriter(new RawMoodleTestHtmlReportCollector());
         RawHtmlCollector<MoodleTestReport> toStringConverter = new RawMoodleTestHtmlReportCollector();
         String rawHtml = readFile(loadResource("/test-moodle-page/moodle-test-assignment-result-full-q227987.html"));
-        writer.write(rawHtml, Path.of(""));
+        writer.write(rawHtml, Paths.get(""));
     }
 
     private static String readFile(String path) {
         try {
-            return Files.readString(Path.of(path));
+            return Files.readString(Paths.get(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

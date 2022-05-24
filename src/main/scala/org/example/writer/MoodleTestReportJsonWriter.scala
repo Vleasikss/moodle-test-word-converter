@@ -8,6 +8,7 @@ import org.example.collector.RawHtmlCollector
 
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 import java.util.UUID
 
 class MoodleTestReportJsonWriter(converter: RawHtmlCollector[MoodleTestReport]) extends RawHtmlFileWriter {
@@ -20,7 +21,7 @@ class MoodleTestReportJsonWriter(converter: RawHtmlCollector[MoodleTestReport]) 
     try {
       val collect = converter.collect(html)
       val json = objectWriter.writeValueAsString(collect)
-      val absolutePath = Path.of(path.toAbsolutePath.toString, UUID.randomUUID().toString.substring(0, 6) + "." + fileExtension)
+      val absolutePath = Paths.get(path.toAbsolutePath.toString, UUID.randomUUID().toString.substring(0, 6) + "." + fileExtension)
       Files.writeString(absolutePath, json)
       Option(absolutePath)
     } catch {

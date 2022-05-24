@@ -9,6 +9,7 @@ import scala.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +30,7 @@ public class MoodleTestHtmlToStringConverterTest {
         RawHtmlCollector<MoodleTestReport> toStringConverter = new RawMoodleTestHtmlReportCollector();
         String str = readFile(loadResource("/test-moodle-page/moodle-test-assignment-result-full-q272284.html"));
         MoodleTestReportJsonWriter writer = new MoodleTestReportJsonWriter(toStringConverter);
-        Option<Path> write = writer.write(str, Path.of(""));
+        Option<Path> write = writer.write(str, Paths.get(""));
         System.out.println(write.get());
     }
 
@@ -43,7 +44,7 @@ public class MoodleTestHtmlToStringConverterTest {
 
     private static String readFile(String path) {
         try {
-            return Files.readString(Path.of(path));
+            return Files.readString(Paths.get(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
