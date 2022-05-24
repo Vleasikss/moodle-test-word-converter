@@ -6,13 +6,16 @@ import org.example.writer.MoodleTestReportWordWriter
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import scala.io.Source
 import scala.language.implicitConversions
+import scala.util.Using
 
 object Main {
 
   implicit def toPath(somePath: String): Path = Paths.get(somePath)
 
   def main(args: Array[String]): Unit = {
+    System.setProperty("file.encoding", "UTF-8")
 
     if (args.length != 2) {
       throw new RuntimeException(
@@ -27,7 +30,9 @@ object Main {
 
     val writer = new MoodleTestReportWordWriter(new RawMoodleTestHtmlReportCollector)
 
-    writer.write(Files.readString(inputFileHtmlPath), outputFileHtmlPath) match {
+    val input = Using(Source.fromFile(inputFileHtmlPath, "UTF-8"))(_.mkString).get
+
+    writer.write(input, outputFileHtmlPath) match {
       case Some(path) => println(s"Successfully converted $inputFileHtmlPath into ${path.toAbsolutePath}")
       case _ => println(s"Unable to convert $inputFileHtmlPath")
     }

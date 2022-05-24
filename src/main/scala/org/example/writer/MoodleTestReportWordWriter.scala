@@ -66,7 +66,7 @@ class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestRepor
   }
 
   private def generateFilename(reportId: String, username: String, title: String): String =
-    s"$username-$title-$reportId.$fileExtension".replaceAll(" ", "-")
+    s"$username-$title-$reportId.$fileExtension".replaceAll("[ :]", "-")
 
   private def paragraphStyle(implicit document: Document): ParagraphStyle = {
     val s = new ParagraphStyle(document)

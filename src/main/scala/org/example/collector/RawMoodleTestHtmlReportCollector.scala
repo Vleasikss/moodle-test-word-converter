@@ -62,6 +62,7 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
               MoodleAnswer(correctness, isSelected, answerLabel, answerNumber)
             })
             .toList
+            .sortBy(_.number)
 
           val answerLabel = element.getElementsByAttributeValue("data-region", "answer-label")
             .head
@@ -94,6 +95,7 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
         (testGrade, test)
       }
       .toList
+      .sortBy(_._2.testNumber)
 
     MoodleTestReport(username, id, title, tests)
   }
