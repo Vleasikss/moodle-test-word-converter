@@ -32,12 +32,11 @@ class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestRepor
       heading.appendText(report.title)
       heading.applyStyle(BuiltinStyle.Title)
 
-      report.tests.zipWithIndex.foreach {
-        case (test, i) =>
+      report.tests.foreach { test =>
           val (grade, testInfo) = test
 
           val subheading = section.addParagraph()
-          subheading.appendText(s"${i + 1}. ${testInfo.name}")
+          subheading.appendText(s"${testInfo.testNumber}. ${testInfo.name}")
           subheading.appendText(s"\nGrade: ${grade.grade}/${grade.maxGrade}").appendGradeStyle
           subheading.appendText(s"\n${testInfo.prompt}")
           subheading.applyStyle(BuiltinStyle.Heading_3)
