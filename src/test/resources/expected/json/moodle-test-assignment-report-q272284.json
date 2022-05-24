@@ -1,0 +1,26 @@
+{
+  "username" : "Єсипчук Дарина",
+  "id" : "272284",
+  "title" : "Модуль №2: Attempt review",
+  "tests" : [ [ {
+    "id" : "272284",
+    "testNumber" : 1,
+    "grade" : 1.0,
+    "maxGrade" : 1.0
+  }, {
+    "name" : "Непряме (опосередковане) валютне котирування – це:",
+    "prompt" : "Виберіть одну відповідь:",
+    "testNumber" : 1,
+    "answers" : [ {
+      "isCorrect" : null,
+      "isSelected" : false,
+      "label" : "одиниця іноземної валюти дорівнює певній кількості національної валюти",
+      "number" : "a."
+    }, {
+      "isCorrect" : null,
+      "isSelected" : true,
+      "label" : "множинність валютних курсів",
+      "number" : "b."
+    } ]
+  } ] ]
+}

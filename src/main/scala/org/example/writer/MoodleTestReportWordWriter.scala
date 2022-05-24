@@ -13,7 +13,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 
-class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestReport]) extends RawHtmlFileWriter {
+class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
 
   private lazy val GREEN = new Color(0, 255, 0)
   private lazy val RED = new Color(255, 0, 0)
@@ -21,9 +21,8 @@ class MoodleTestReportWordWriter(htmlCollector: RawHtmlCollector[MoodleTestRepor
 
   override def fileExtension: String = "docx"
 
-  override def write(rawHtml: String, path: Path): Option[Path] = {
+  override def write(report: MoodleTestReport, path: Path): Option[Path] = {
     try {
-      val report = htmlCollector.collect(rawHtml)
 
       implicit val document: Document = new Document()
       document.getStyles.add(paragraphStyle)

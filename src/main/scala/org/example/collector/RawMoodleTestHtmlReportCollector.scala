@@ -20,7 +20,7 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
   override def collect(rawHtml: String): MoodleTestReport = {
     val parse = Jsoup.parse(rawHtml)
     val title = parse.titleHtmlReduced()
-    val username = parse.getElementById("usermenu").htmlReduced()
+    val username = parse.getElementById("usermenu").htmlReduced().trim
     val contents: Elements = parse.getElementsByClass("content")
     val pageContent = parse.getElementById("page-content")
 

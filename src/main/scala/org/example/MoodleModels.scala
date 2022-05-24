@@ -21,9 +21,11 @@ case class MoodleTestGrade(
   maxGrade: Double
 )
 
+trait Report
+
 case class MoodleTestReport(
   username: String,
   id: String,
   title: String,
   tests: List[(MoodleTestGrade, MoodleTest)]
-)
+) extends Report

@@ -28,11 +28,14 @@ object Main {
     val inputFileHtmlPath = args(0)
     val outputFileHtmlPath = args(1)
 
-    val writer = new MoodleTestReportWordWriter(new RawMoodleTestHtmlReportCollector)
+
+    val writer = new MoodleTestReportWordWriter()
 
     val input = Using(Source.fromFile(inputFileHtmlPath, "UTF-8"))(_.mkString).get
+    val collector = new RawMoodleTestHtmlReportCollector
+    val report = collector.collect(input)
 
-    writer.write(input, outputFileHtmlPath) match {
+    writer.write(report, outputFileHtmlPath) match {
       case Some(path) => println(s"Successfully converted $inputFileHtmlPath into ${path.toAbsolutePath}")
       case _ => println(s"Unable to convert $inputFileHtmlPath")
     }
