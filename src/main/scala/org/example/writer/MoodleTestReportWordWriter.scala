@@ -6,7 +6,6 @@ import com.spire.doc.documents.BuiltinStyle
 import com.spire.doc.documents.ParagraphStyle
 import com.spire.doc.fields.TextRange
 import org.example.MoodleTestReport
-import org.example.collector.RawHtmlCollector
 
 import java.awt.Color
 import java.nio.file.Path
