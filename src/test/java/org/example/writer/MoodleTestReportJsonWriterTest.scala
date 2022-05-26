@@ -9,9 +9,7 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-import java.io.File
 import java.nio.file.Paths
-import scala.reflect.io.Directory
 
 class MoodleTestReportJsonWriterTest extends AnyFlatSpec
   with should.Matchers

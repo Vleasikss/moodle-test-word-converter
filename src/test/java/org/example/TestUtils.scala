@@ -9,6 +9,7 @@ import scala.util.Using
 trait TestUtils {
 
   implicit def toPath(path: String): Path = Path.of(path)
+
   implicit def toStr(path: Path): String = path.toAbsolutePath.toString
 
   protected def /(path: String): String =

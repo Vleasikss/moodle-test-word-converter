@@ -12,8 +12,6 @@ import java.nio.file.Paths
 
 class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
 
-  override def fileExtension: String = "docx"
-
   override def write(report: MoodleTestReport, path: Path): Option[Path] = {
     try {
 
@@ -27,23 +25,23 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
       heading.applyStyle(BuiltinStyle.Title)
 
       report.tests.foreach { test =>
-          val (grade, testInfo) = test
+        val (grade, testInfo) = test
 
-          val subheading = section.addParagraph()
-          subheading.appendText(s"${testInfo.testNumber}. ${testInfo.name}")
-          subheading.appendText(s"\nGrade: ${grade.grade}/${grade.maxGrade}").appendGradeStyle
-          subheading.appendText(s"\n${testInfo.prompt}")
-          subheading.applyStyle(BuiltinStyle.Heading_3)
+        val subheading = section.addParagraph()
+        subheading.appendText(s"${testInfo.testNumber}. ${testInfo.name}")
+        subheading.appendText(s"\nGrade: ${grade.grade}/${grade.maxGrade}").appendGradeStyle
+        subheading.appendText(s"\n${testInfo.prompt}")
+        subheading.applyStyle(BuiltinStyle.Heading_3)
 
-          val para = section.addParagraph()
+        val para = section.addParagraph()
 
-          testInfo.answers.foreach { answer =>
-            para
-              .appendText(s"${answer.number} - ${answer.label}\n")
-              .appendAnswerStyle(answer.isCorrect, answer.isSelected)
-          }
+        testInfo.answers.foreach { answer =>
+          para
+            .appendText(s"${answer.number} - ${answer.label}\n")
+            .appendAnswerStyle(answer.isCorrect, answer.isSelected)
+        }
 
-          para.applyStyle(paraStyle.getName)
+        para.applyStyle(paraStyle.getName)
       }
 
       val filename = generateFilename(report.id, report.username, report.title)
@@ -60,6 +58,8 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
 
   private def generateFilename(reportId: String, username: String, title: String): String =
     s"$username-$title-$reportId.$fileExtension".replaceAll("[ :]", "-")
+
+  override def fileExtension: String = "docx"
 
   private def paragraphStyle(implicit document: Document): ParagraphStyle = {
     val s = new ParagraphStyle(document)

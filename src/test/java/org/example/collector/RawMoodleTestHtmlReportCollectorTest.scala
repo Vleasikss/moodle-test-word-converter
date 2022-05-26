@@ -4,9 +4,6 @@ import org.example.TestUtils
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-import scala.io.Source
-import scala.util.Using
-
 class RawMoodleTestHtmlReportCollectorTest extends AnyFlatSpec
   with should.Matchers
   with TestUtils {
@@ -15,7 +12,7 @@ class RawMoodleTestHtmlReportCollectorTest extends AnyFlatSpec
     val collector = new RawMoodleTestHtmlReportCollector
     val path = /("/test-moodle-page/moodle-test-assignment-result-full-q272284.html")
 
-    val rawHtml = Using(Source.fromFile(path, "UTF-8"))(_.mkString).get
+    val rawHtml = readFile(path)
     val collected = collector.collect(rawHtml)
 
     collected.tests.size should be(30)
@@ -29,7 +26,7 @@ class RawMoodleTestHtmlReportCollectorTest extends AnyFlatSpec
     val collector = new RawMoodleTestHtmlReportCollector
     val path = /("/test-moodle-page/moodle-test-assignment-result-full-q251633.html")
 
-    val rawHtml = Using(Source.fromFile(path, "UTF-8"))(_.mkString).get
+    val rawHtml = readFile(path)
     val collected = collector.collect(rawHtml)
 
     collected.tests.size should be(6)
@@ -43,7 +40,7 @@ class RawMoodleTestHtmlReportCollectorTest extends AnyFlatSpec
     val collector = new RawMoodleTestHtmlReportCollector
     val path = /("/test-moodle-page/moodle-test-assignment-result-full-q227987.html")
 
-    val rawHtml = Using(Source.fromFile(path, "UTF-8"))(_.mkString).get
+    val rawHtml = readFile(path)
     val collected = collector.collect(rawHtml)
 
     collected.tests.size should be(10)

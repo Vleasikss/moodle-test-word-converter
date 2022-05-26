@@ -16,8 +16,6 @@ class MoodleTestReportJsonWriter extends ReportWriter[MoodleTestReport] {
     .registerModule(DefaultScalaModule)
     .writerWithDefaultPrettyPrinter()
 
-  override def fileExtension: String = "json"
-
   def write(report: MoodleTestReport, path: Path): Option[Path] = {
     try {
       val json = objectWriter.writeValueAsString(report)
@@ -30,5 +28,7 @@ class MoodleTestReportJsonWriter extends ReportWriter[MoodleTestReport] {
         None
     }
   }
+
+  override def fileExtension: String = "json"
 
 }

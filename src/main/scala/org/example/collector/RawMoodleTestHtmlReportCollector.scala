@@ -34,47 +34,47 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
     val tests = contents
       .filterNot(_.getElementsByClass("qtext").isEmpty)
       .map { element =>
-          val qtext: String = element.getElementsByClass("qtext").head.htmlReduced()
-          val prompt: String = element.getElementsByClass("prompt").head.htmlReduced()
+        val qtext: String = element.getElementsByClass("qtext").head.htmlReduced()
+        val prompt: String = element.getElementsByClass("prompt").head.htmlReduced()
 
-          val answers: List[MoodleAnswer] = element
-            .getElementsByClass("answer")
-            .flatMap(element => element.getElementsByClass("r0").toList ++ element.getElementsByClass("r1").toList)
-            .map(element => {
-              val isSelected = element.getElementsByTag("input").hasAttr("checked")
+        val answers: List[MoodleAnswer] = element
+          .getElementsByClass("answer")
+          .flatMap(element => element.getElementsByClass("r0").toList ++ element.getElementsByClass("r1").toList)
+          .map(element => {
+            val isSelected = element.getElementsByTag("input").hasAttr("checked")
 
-              val correctness = {
-                val isCorrect = element.hasClass("correct") && isSelected
-                val isIncorrect = element.hasClass("incorrect") && isSelected
-                if (isIncorrect || isCorrect) Option(isCorrect) else Option.empty
-              }
+            val correctness = {
+              val isCorrect = element.hasClass("correct") && isSelected
+              val isIncorrect = element.hasClass("incorrect") && isSelected
+              if (isIncorrect || isCorrect) Option(isCorrect) else Option.empty
+            }
 
-              val answerNumber = element.getElementsByClass("answernumber")
-                .head
-                .htmlReduced()
+            val answerNumber = element.getElementsByClass("answernumber")
+              .head
+              .htmlReduced()
 
-              val answerLabel = element.getElementsByAttributeValue("data-region", "answer-label")
-                .head
-                .getElementsByClass("flex-fill ml-1")
-                .head
-                .htmlReduced()
+            val answerLabel = element.getElementsByAttributeValue("data-region", "answer-label")
+              .head
+              .getElementsByClass("flex-fill ml-1")
+              .head
+              .htmlReduced()
 
-              MoodleAnswer(correctness, isSelected, answerLabel, answerNumber)
-            })
-            .toList
-            .sortBy(_.number)
+            MoodleAnswer(correctness, isSelected, answerLabel, answerNumber)
+          })
+          .toList
+          .sortBy(_.number)
 
-          val answerLabel = element.getElementsByAttributeValue("data-region", "answer-label")
-            .head
+        val answerLabel = element.getElementsByAttributeValue("data-region", "answer-label")
+          .head
 
 
-          val answerId = ":[0-9]+_".r
-            .findFirstIn(answerLabel.attr("id"))
-            .get
-            .replaceAll("[:_]", "")
-            .toInt
+        val answerId = ":[0-9]+_".r
+          .findFirstIn(answerLabel.attr("id"))
+          .get
+          .replaceAll("[:_]", "")
+          .toInt
 
-          MoodleTest(qtext, prompt, answerId, answers)
+        MoodleTest(qtext, prompt, answerId, answers)
       }
       .map { test =>
         val div = pageContent.getElementById(s"question-$id-${test.testNumber}")
