@@ -8,6 +8,6 @@ trait ReportWriter[T <: Report] {
 
   def write(report: T, path: Path): Option[Path]
 
-  def fileExtension: String
+  def filename(report: T): String
 
 }

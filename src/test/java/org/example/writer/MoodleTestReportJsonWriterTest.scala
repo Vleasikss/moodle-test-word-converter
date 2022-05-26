@@ -42,7 +42,7 @@ class MoodleTestReportJsonWriterTest extends AnyFlatSpec
     result should not be empty
 
     val filename = result.get.toString.replace(actualJsonPath.toAbsolutePath + "/", "")
-    "[\\S]{6}\\.json".r.matches(filename) should be(true)
+    s"${moodleReport.username.reduceExtraSymbols}-${moodleReport.title.reduceExtraSymbols}-${moodleReport.id}.json" should equal(filename)
 
     val actualJson: String = readFile(result.get)
     val expectedJson: String = readFile(Paths.get(expectedJsonPath, s"moodle-test-assignment-report-q${moodleReport.id}.json"))

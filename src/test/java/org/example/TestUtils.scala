@@ -12,6 +12,12 @@ trait TestUtils {
 
   implicit def toStr(path: Path): String = path.toAbsolutePath.toString
 
+  implicit class StringImplicits(str: String) {
+
+    def reduceExtraSymbols: String = str.replaceAll("[ :]", "-")
+
+  }
+
   protected def /(path: String): String =
     Objects.requireNonNull(this.getClass.getResource(path)).getPath
 

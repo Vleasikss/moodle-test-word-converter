@@ -10,7 +10,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 
-class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
+class MoodleTestReportWordWriter extends MoodleTestReportWriter {
 
   override def write(report: MoodleTestReport, path: Path): Option[Path] = {
     try {
@@ -44,7 +44,7 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
         para.applyStyle(paraStyle.getName)
       }
 
-      val filename = generateFilename(report.id, report.username, report.title)
+      val filename = filename(report)
       val absolutePath = Paths.get(path.toAbsolutePath.toString, filename).toAbsolutePath
 
       document.saveToFile(absolutePath.toString, FileFormat.Docx)
@@ -56,11 +56,6 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
     }
   }
 
-  private def generateFilename(reportId: String, username: String, title: String): String =
-    s"$username-$title-$reportId.$fileExtension".replaceAll("[ :]", "-")
-
-  override def fileExtension: String = "docx"
-
   private def paragraphStyle(implicit document: Document): ParagraphStyle = {
     val s = new ParagraphStyle(document)
     s.setName("paraStyle")
@@ -69,5 +64,6 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
     s
   }
 
+  override def fileExtension: String = "docx"
 
 }

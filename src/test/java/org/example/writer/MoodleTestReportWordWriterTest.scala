@@ -39,13 +39,7 @@ class MoodleTestReportWordWriterTest extends AnyFlatSpec
     result should not be empty
 
     val filename = result.get.toString.replace(actualWordPath.toAbsolutePath + "/", "")
-    s"${moodleReport.username.reduceSpaces}-${moodleReport.title.reduceSpaces}-${moodleReport.id}.docx" should equal(filename)
-
-  }
-
-  implicit class StringImplicits(str: String) {
-
-    def reduceSpaces: String = str.replaceAll("[ :]", "-")
+    s"${moodleReport.username.reduceExtraSymbols}-${moodleReport.title.reduceExtraSymbols}-${moodleReport.id}.docx" should equal(filename)
 
   }
 
