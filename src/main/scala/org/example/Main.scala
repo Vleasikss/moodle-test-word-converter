@@ -3,7 +3,6 @@ package org.example
 import org.example.collector.RawMoodleTestHtmlReportCollector
 import org.example.writer.MoodleTestReportWordWriter
 
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import scala.io.Source
@@ -20,8 +19,8 @@ object Main {
     if (args.length != 2) {
       throw new RuntimeException(
         """
-          |1. Html Input path must be provided (for example folder1/folder2/file.html)
-          |2. Html Output path must be provided (for example folder3/folder4)
+          |1. Html Input absolute path must be provided (for example folder1/folder2/file.html)
+          |2. Html Output absolute path must be provided (for example folder3/folder4)
           |""".stripMargin)
     }
 
@@ -32,7 +31,7 @@ object Main {
     val writer = new MoodleTestReportWordWriter()
 
     val input = Using(Source.fromFile(inputFileHtmlPath, "UTF-8"))(_.mkString).get
-    val collector = new RawMoodleTestHtmlReportCollector
+    val collector = new RawMoodleTestHtmlReportCollector()
     val report = collector.collect(input)
 
     writer.write(report, outputFileHtmlPath) match {

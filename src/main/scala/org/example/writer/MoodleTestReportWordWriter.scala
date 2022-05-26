@@ -4,19 +4,13 @@ import com.spire.doc.Document
 import com.spire.doc.FileFormat
 import com.spire.doc.documents.BuiltinStyle
 import com.spire.doc.documents.ParagraphStyle
-import com.spire.doc.fields.TextRange
 import org.example.MoodleTestReport
 
-import java.awt.Color
 import java.nio.file.Path
 import java.nio.file.Paths
 
 
 class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
-
-  private lazy val GREEN = new Color(0, 255, 0)
-  private lazy val RED = new Color(255, 0, 0)
-  private lazy val BLUE = new Color(0, 64, 250)
 
   override def fileExtension: String = "docx"
 
@@ -24,7 +18,8 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
     try {
 
       implicit val document: Document = new Document()
-      document.getStyles.add(paragraphStyle)
+      val paraStyle = paragraphStyle
+      document.getStyles.add(paraStyle)
 
       val section = document.addSection()
       val heading = section.addParagraph()
@@ -48,7 +43,7 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
               .appendAnswerStyle(answer.isCorrect, answer.isSelected)
           }
 
-          para.applyStyle("paraStyle")
+          para.applyStyle(paraStyle.getName)
       }
 
       val filename = generateFilename(report.id, report.username, report.title)
@@ -74,25 +69,5 @@ class MoodleTestReportWordWriter extends ReportWriter[MoodleTestReport] {
     s
   }
 
-  private implicit class TextRangeImplicits(range: TextRange) {
-    def appendAnswerStyle(isCorrect: Option[Boolean], isSelected: Boolean)(implicit document: Document): TextRange = {
-      val color: Option[Color] = isCorrect match {
-        case Some(value) => if (value) Option(GREEN) else Option(RED)
-        case _ => if (isSelected) Option(BLUE) else None
-      }
-
-      range.getCharacterFormat.setFontName("Times New Roman")
-      range.getCharacterFormat.setFontSize(16f)
-      color.foreach(range.getCharacterFormat.setTextColor)
-      range
-    }
-
-    def appendGradeStyle(implicit document: Document): TextRange = {
-      range.getCharacterFormat.setItalic(true)
-      range.getCharacterFormat.setBold(false)
-      range
-    }
-
-  }
 
 }
