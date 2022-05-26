@@ -3,17 +3,11 @@
   "id": "272284",
   "title": "Модуль №2: Attempt review",
   "tests": [
-    [
-      {
-        "id": "272284",
-        "testNumber": 1,
-        "grade": 1.0,
-        "maxGrade": 1.0
-      },
-      {
+    {
+      "number": 1,
+      "info": {
         "name": "Непряме (опосередковане) валютне котирування – це:",
         "prompt": "Виберіть одну відповідь:",
-        "testNumber": 1,
         "answers": [
           {
             "isCorrect": null,
@@ -28,7 +22,11 @@
             "number": "b."
           }
         ]
+      },
+      "grade": {
+        "grade": 1.0,
+        "maxGrade": 1.0
       }
-    ]
+    }
   ]
 }

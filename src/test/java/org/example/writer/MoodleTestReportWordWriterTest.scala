@@ -3,6 +3,7 @@ package org.example.writer
 import org.example.MoodleAnswer
 import org.example.MoodleTest
 import org.example.MoodleTestGrade
+import org.example.MoodleTestInfo
 import org.example.MoodleTestReport
 import org.example.TestUtils
 import org.scalatest.BeforeAndAfterAll
@@ -21,17 +22,18 @@ class MoodleTestReportWordWriterTest extends AnyFlatSpec
       "Єсипчук Дарина",
       "272284",
       "Модуль №2: Attempt review",
-      List(
-        (MoodleTestGrade("272284", 1, 1.0, 1.0), MoodleTest(
+      List[MoodleTest](MoodleTest(
+        1,
+        MoodleTestInfo(
           "Непряме (опосередковане) валютне котирування – це:",
           "Виберіть одну відповідь:",
-          1,
           List(
             MoodleAnswer(None, isSelected = false, "одиниця іноземної валюти дорівнює певній кількості національної валюти", "a."),
             MoodleAnswer(None, isSelected = true, "множинність валютних курсів", "b."),
           )
-        )
-        ))
+        ),
+        MoodleTestGrade(1.0, 1.0),
+      ))
     )
 
     val writer = new MoodleTestReportWordWriter()

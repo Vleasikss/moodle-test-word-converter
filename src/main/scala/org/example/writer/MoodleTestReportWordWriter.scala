@@ -25,10 +25,10 @@ class MoodleTestReportWordWriter extends MoodleTestReportWriter {
       heading.applyStyle(BuiltinStyle.Title)
 
       report.tests.foreach { test =>
-        val (grade, testInfo) = test
+        val (grade, testInfo) = (test.grade, test.info)
 
         val subheading = section.addParagraph()
-        subheading.appendText(s"${testInfo.testNumber}. ${testInfo.name}")
+        subheading.appendText(s"${test.number}. ${testInfo.name}")
         subheading.appendText(s"\nGrade: ${grade.grade}/${grade.maxGrade}").appendGradeStyle
         subheading.appendText(s"\n${testInfo.prompt}")
         subheading.applyStyle(BuiltinStyle.Heading_3)
@@ -44,7 +44,7 @@ class MoodleTestReportWordWriter extends MoodleTestReportWriter {
         para.applyStyle(paraStyle.getName)
       }
 
-      val filename = filename(report)
+      val filename = reportFilename(report)
       val absolutePath = Paths.get(path.toAbsolutePath.toString, filename).toAbsolutePath
 
       document.saveToFile(absolutePath.toString, FileFormat.Docx)

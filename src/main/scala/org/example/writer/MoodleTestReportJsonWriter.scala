@@ -18,7 +18,7 @@ class MoodleTestReportJsonWriter extends MoodleTestReportWriter {
   def write(report: MoodleTestReport, path: Path): Option[Path] = {
     try {
       val json = objectWriter.writeValueAsString(report)
-      val absolutePath = Paths.get(path.toAbsolutePath.toString, filename(report))
+      val absolutePath = Paths.get(path.toAbsolutePath.toString, reportFilename(report))
       Files.writeString(absolutePath, json)
       Option(absolutePath)
     } catch {

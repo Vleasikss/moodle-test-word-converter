@@ -3,6 +3,7 @@ package org.example.collector
 import org.example.MoodleAnswer
 import org.example.MoodleTest
 import org.example.MoodleTestGrade
+import org.example.MoodleTestInfo
 import org.example.MoodleTestReport
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -74,10 +75,11 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
           .replaceAll("[:_]", "")
           .toInt
 
-        MoodleTest(qtext, prompt, answerId, answers)
+        (MoodleTestInfo(qtext, prompt, answers), answerId)
       }
       .map { test =>
-        val div = pageContent.getElementById(s"question-$id-${test.testNumber}")
+        val (testInfo, number) = test
+        val div = pageContent.getElementById(s"question-$id-$number")
 
         val grade = div.getElementsByClass("grade").head
         val pattern = """[-+]?\d*[,.]\d+|\d+""".r
@@ -87,15 +89,13 @@ class RawMoodleTestHtmlReportCollector extends RawHtmlCollector[MoodleTestReport
           .map(_.replace(',', '.'))
 
         val testGrade = MoodleTestGrade(
-          id = id,
-          testNumber = test.testNumber,
           grade = values.head.toDouble,
           maxGrade = values(1).toDouble
         )
-        (testGrade, test)
+        MoodleTest(number, testInfo, testGrade)
       }
       .toList
-      .sortBy(_._2.testNumber)
+      .sortBy(_.number)
 
     MoodleTestReport(username, id, title, tests)
   }

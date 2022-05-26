@@ -7,18 +7,21 @@ case class MoodleAnswer(
   number: String,
 )
 
-case class MoodleTest(
+case class MoodleTestInfo(
   name: String,
   prompt: String,
-  testNumber: Int,
   answers: List[MoodleAnswer],
 )
 
 case class MoodleTestGrade(
-  id: String,
-  testNumber: Int,
   grade: Double,
   maxGrade: Double
+)
+
+case class MoodleTest(
+  number: Int,
+  info: MoodleTestInfo,
+  grade: MoodleTestGrade
 )
 
 trait Report
@@ -27,5 +30,5 @@ case class MoodleTestReport(
   username: String,
   id: String,
   title: String,
-  tests: List[(MoodleTestGrade, MoodleTest)]
+  tests: List[MoodleTest]
 ) extends Report
